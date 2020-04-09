@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "add": "node add.js",
-    "test": "node test.js",
+    "test": "mocha",
     "start": "nodemon main.js"
   },
   "author": "",
@@ -18,5 +18,8 @@
     "lodash": "^4.17.15",
     "mongoose": "^5.9.7",
     "qs": "^6.9.3"
+  },
+  "devDependencies": {
+    "mocha": "^7.1.1"
   }
 }

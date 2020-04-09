@@ -42,8 +42,8 @@ app.post('/userlogin', async (req, res) => {
       }
     } else {
       console.log('last Failed Time ', new Date(userDoc.last_failed_attempt), userDoc.login_attempts);
-      console.log(new Date().getTime() - new Date(userDoc.last_failed_attempt).getTime() > 2 * 60 * 1000);
-      if (new Date().getTime() - new Date(userDoc.last_failed_attempt).getTime() > 2 * 60 * 1000) {
+      console.log(body.timestamp - new Date(userDoc.last_failed_attempt).getTime() > 2 * 60 * 1000);
+      if (body.timestamp - new Date(userDoc.last_failed_attempt).getTime() > 2 * 60 * 1000) {
         if (body.password === userDoc.password) {
           // Login Success
           userDoc.last_failed_attempt = null;
