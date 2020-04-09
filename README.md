@@ -28,3 +28,7 @@
    returns RIGHT if credentials match
    returns WRONG if credentials doesn't match
    returns BLOCKED if user has entered wrong credentials 3 times within 2 minutes     
+   
+6. Run "npm run add"  before running test to add a User if not alredy added
+
+7. Run 'npm run test' to run test.
