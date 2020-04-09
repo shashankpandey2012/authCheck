@@ -42,7 +42,8 @@ app.post('/userlogin', async (req, res) => {
       }
     } else {
       console.log('last Failed Time ', new Date(userDoc.last_failed_attempt), userDoc.login_attempts);
-      if (new Date().getTime() - new Date(userDoc.last_failed_attempt) > 2 * 60 * 1000) {
+      console.log(new Date().getTime() - new Date(userDoc.last_failed_attempt).getTime() > 2 * 60 * 1000);
+      if (new Date().getTime() - new Date(userDoc.last_failed_attempt).getTime() > 2 * 60 * 1000) {
         if (body.password === userDoc.password) {
           // Login Success
           userDoc.last_failed_attempt = null;
@@ -81,10 +82,25 @@ app.post('/userlogin', async (req, res) => {
 });
 
 app.post('/createuser', async (req, res) => {
-  const body = req.body;
-  const userDoc = new User(body)
-  const newReport = await userDoc.save();
-  res.json(newReport);
+  try {
+    const body = req.body;
+    const userDoc = new User(body)
+    const newReport = await userDoc.save();
+    res.json(newReport);
+  } catch(e) {
+    console.log('e',e.code)
+    if (e.code === 11000) {
+      res.send('Duplicate Record');
+    } else {
+      res.send('Error Occured');
+    }
+  }
+});
+
+app.get('/usercount', async (req, res) => {
+  const count = await User.find({}).lean();
+  console.log('Count><<<<<<', count);
+  res.json({count: count.length});
 });
 
 
